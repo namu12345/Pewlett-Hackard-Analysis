@@ -81,7 +81,7 @@ which resulted into as follows :
 
 ![image](https://user-images.githubusercontent.com/92283185/144630696-7ebff488-fa5c-4b94-9bf5-041d3b7d400a.png)
 
-The above table shows **"90398"** employees have reached to retiring age and are about to retire so certainly it is **"Silver Tsunami"** for PH company.
+The above query returns **"90398"** rows. The table further explains list of employees who are going to retire in the next few years. And also it displays list of employees by her or his most recent title. In short it explains how **"Silver Tsunami"** has occured for PH company.
 
 Further the PH wants Bobby and his manager to work on creating a mentorship-eligibility table. This table need to include the data that holds the current employees who were born between January 1, 1965 and December 31, 1965.
 
@@ -115,13 +115,29 @@ So studying at the above table we figured out there are **"1549 employees"** who
 
 To summarize the analysis I can say **64%** of PH employees are getting ready for retirement or being redirected to their mentorship initiatives, which will mean that they are likely going to need an extensive hiring process in the upcoming years. We can further go deep into the numbers as the CEO would like to know the data more in brief as :
 
-- How many roles will need to be filled as the "silver tsunami" begins to make an impact?
+## How many roles will need to be filled as the "silver tsunami" begins to make an impact?
 
-So as mentioned earlier **90398** roles need to be filled as the **"silver tsunami"** begins to make an impact.
+As displayed earlier the table retiring_titles gives us the count of retiring employees as per their last title. To get the number of positions that will be open in next four years I ran additional query that breaks down how many staff will retire per department. Since every department will be affected in some way this query gives more precise numbers what each department can expect and how many roles will need to be filled. So following is the query which we wrote and further is the retiring counts table which dislplays how many roles are will need to be filled department wise :
 
-- Are there enough qualified, retirement-ready employees in the departments to mentor the next generation of Pewlett Hackard employees?
+- Query :
+Select count(ut.emp_no)as "Retiring Counts",ut.title,d.dept_name
+INTO retiring_counts
+from unique_titles as ut
+left join dept_emp as de
+on ut.emp_no = de.emp_no
+left join departments as d
+on d.dept_no = de.dept_no
+where de.to_date = '9999-01-01'
+GROUP BY D.dept_name,ut.title
+order by d.dept_name,"Retiring Counts" desc
 
-To get the number of positions that are ready to mentor the next generation of Pewlett Hackard employees I ran additional query that breaks down how many staff are eligible for mentorship program per department. Since every department will have retirement-ready employees,this query gives more precise numbers how each department look like.
+![image](https://user-images.githubusercontent.com/92283185/144763551-3a199c24-a4d8-4aa8-9b7b-5025534f6e87.png)
+![image](https://user-images.githubusercontent.com/92283185/144763685-e4d74ebe-13f9-4d2b-9ee5-38d7ff05c607.png)
+![image](https://user-images.githubusercontent.com/92283185/144763703-50278a7d-7287-42ab-a458-a309faeb9797.png)
+
+## Are there enough qualified, retirement-ready employees in the departments to mentor the next generation of Pewlett Hackard employees?
+
+To get the number of positions that are ready to mentor the next generation of Pewlett Hackard employees I have to run one more additional query that breaks down how many staff are eligible for mentorship program per department. Since every department will have retirement-ready employees,this query gives more precise numbers how each department look like.
 
 ![image](https://user-images.githubusercontent.com/92283185/144633481-38b931fa-6dfe-494c-a999-6e22918fb161.png)
 
